@@ -35,7 +35,7 @@ def read_csv(filename, directory="files"):
     """Reads a CSV file from the specified directory and returns the first column as a list.
     Arguments
     filename: name of file that will be read
-    directory: path to the map where the file is located (relative to working directory is enough) defaults to "files")
+    directory: path to the folder where the file is located (relative to working directory is enough) defaults to "files")
     """
     file_path = os.path.join(directory, filename)
     full_path = os.path.abspath(file_path)

@@ -3,17 +3,17 @@ import requests
 import time
 
 
-def download_pdb(pdb_ids, map="lac_PDB_files",directory="files" , retries=1, delay=2):
+def download_pdb(pdb_ids, folder="lac_PDB_files",directory="files" , retries=1, delay=2):
     """Downloads PDB files while avoiding re-downloading existing files.
 
     Arguments:
     - pdb_ids: List of PDB IDs to download.
     - directory: Directory where PDB files will be saved (defaults to 'files' in the working dir).
-    - filename: Subfolder name inside the directory (e.g., 'lac_PDB_files').
+    - folder: Subfolder name inside the directory (e.g., 'lac_PDB_files').
     - retries: Number of times to retry a failed download.
     - delay: Seconds to wait before retrying a failed request.
     """
-    save_dir = os.path.join(os.getcwd(), directory, map)  # Full path
+    save_dir = os.path.join(os.getcwd(), directory, folder)  # Full path
     os.makedirs(save_dir, exist_ok=True)  # Ensure directory exists
 
     base_url = "https://files.rcsb.org/download/{}.pdb"

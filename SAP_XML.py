@@ -5,17 +5,17 @@ from pyrosetta.rosetta.core.scoring import get_score_function
 import os
 
 
-def SAP_XML(PDB_ID, PDB_files_map, directory=f"{os.getcwd()}/files"):
+def SAP_XML(PDB_ID, PDB_files_folder, directory=f"{os.getcwd()}/files"):
     """perform sapscore for a protein
     Arguments
     PDB_ID: PDB ID of the protein
-    PDB_files_map: name of the map which contain the proteins PDB file
-    directory: path to the map where the PDB_files_map is located. (defaults to working directory for the program /files)
+    PDB_files_folder: name of the folder which contain the proteins PDB file
+    directory: path to the folder where the PDB_files_folder is located. (defaults to working directory for the program /files)
     """
     pdb_id = PDB_ID
     user = os.getlogin()
     program_directory = os.getcwd()
-    working_directory = f"{directory}/{PDB_files_map}" #working directory for this script
+    working_directory = f"{directory}/{PDB_files_folder}" #working directory for this script
 
 
     # 🔹 Initialize PyRosetta with beta_nov16 correction

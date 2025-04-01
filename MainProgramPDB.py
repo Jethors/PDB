@@ -39,11 +39,11 @@ csv.write_csv("Sal_output.csv", rId_list) # Choose file name, it's saved in /fil
 pdb_list = csv.read_csv("Sal_output.csv") #Choose the file name of the file you want to read, defaults to /files/"selected file name" in working directory, can be changed.
 
 # Download PDB files from a list, creates map if it does not exist, uses existing map if it exists.
-pdb.download_pdb(pdb_list, "SalPDBfiles", retries=0) #Give a list of PDB IDs to the constructor and choose the name of the map where the files should be downloaded to. Defaults to /files/"selected map" in working directory, can be changed.
+pdb.download_pdb(pdb_list, "SalPDBfiles", retries=0) #Give a list of PDB IDs to the constructor and choose the name of the folder where the files should be downloaded to. Defaults to /files/"selected folder" in working directory, can be changed.
 
-# Read a list of available PDB files in a map, defaults to /files/"chosen map" in working directory. (PDB ID list)
-pdb_list_from_dir= ffd.files_from_dir("SalPDBfiles") # Choose the map, directory of the map defaults to /files/"selected map" in working directory.
+# Read a list of available PDB files in a folder, defaults to /files/"chosen folder" in working directory. (PDB ID list)
+pdb_list_from_dir= ffd.files_from_dir("SalPDBfiles") # Choose the folder, directory of the folder defaults to /files/"selected folder" in working directory.
 
-#SAP the PDB files in a map.
-sapl.SAP_From_List(pdb_list_from_dir, "SalPDBfiles") #Give a list of the pdb files in the map and the name of the map, defaults to /files/"selected map" in working directory.
+#SAP the PDB files in a folder.
+sapl.SAP_From_List(pdb_list_from_dir, "SalPDBfiles") #Give a list of the pdb files in the folder and the name of the folder, defaults to /files/"selected folder" in working directory.
 

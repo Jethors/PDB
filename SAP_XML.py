@@ -4,14 +4,18 @@ from pyrosetta import pose_from_pdb
 from pyrosetta.rosetta.core.scoring import get_score_function
 import os
 
-"""Utför sapscore för ett protein"""
-def SAP_XML(PDB_ID, PDB_files_map, directory="files"):
 
+def SAP_XML(PDB_ID, PDB_files_map, directory=f"{os.getcwd()}/files"):
+    """perform sapscore for a protein
+    Arguments
+    PDB_ID: PDB ID of the protein
+    PDB_files_map: name of the map which contain the proteins PDB file
+    directory: path to the map where the PDB_files_map is located. (defaults to working directory for the program /files)
+    """
     pdb_id = PDB_ID
     user = os.getlogin()
-    working_directory = f"{os.getcwd()}/{directory}/{PDB_files_map}"
-
-    print(pdb_id, user, working_directory)
+    program_directory = os.getcwd()
+    working_directory = f"{directory}/{PDB_files_map}" #working directory for this script
 
 
     # 🔹 Initialize PyRosetta with beta_nov16 correction
@@ -21,7 +25,7 @@ def SAP_XML(PDB_ID, PDB_files_map, directory="files"):
     os.chdir(working_directory)
     pdb_file = pdb_id + ".pdb"  # Change to actual PDB file
     if not os.path.exists(pdb_file):
-    raise FileNotFoundError(f"ERROR: PDB file '{pdb_file}' not found!")
+        raise FileNotFoundError(f"ERROR: PDB file '{pdb_file}' not found!")
 
     pose = pose_from_pdb(pdb_file)
 
@@ -58,5 +62,6 @@ def SAP_XML(PDB_ID, PDB_files_map, directory="files"):
     scorefxn = get_score_function()
     pose.dump_scored_pdb(output_pdb, scorefxn)
 
-    print(f"\n💾 Modified structure with SAP scores saved as '{output_pdb}'")"""
+    print(f"\n💾 Modified structure with SAP scores saved as '{output_pdb}'")
+    os.chdir(program_directory)
 

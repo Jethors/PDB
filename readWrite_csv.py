@@ -3,13 +3,12 @@ import os
 import pandas as pd
 
 
-def write_csv(filename="output.csv",data_list=None, directory="files"):
+def write_csv(filename,data_list=None, directory="files"):
     """Writes a list of items to a CSV file in the specified directory.
-
-    - Defaults:
-      - `filename`: "output.csv"
-      - `directory`: "files" (relative to working directory)
-    - `data_list`: List of items to write (one per row).
+    Arguments
+    filename: name of the created file
+    data_List: list of items
+    directory: path to save location for the file. (related to working directory is enough) defaults to "files"
     """
     if data_list is None:
         data_list = []
@@ -21,6 +20,7 @@ def write_csv(filename="output.csv",data_list=None, directory="files"):
     file_path = os.path.join(directory, filename)
     full_path = os.path.abspath(file_path)
 
+    # Creates file
     try:
         with open(full_path, "w", newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
@@ -31,8 +31,12 @@ def write_csv(filename="output.csv",data_list=None, directory="files"):
         print(f"❌ Error writing CSV: {e}")
 
 
-def read_csv(filename="input.csv", directory="files"):
-    """Reads a CSV file from the specified directory and returns the first column as a list."""
+def read_csv(filename, directory="files"):
+    """Reads a CSV file from the specified directory and returns the first column as a list.
+    Arguments
+    filename: name of file that will be read
+    directory: path to the map where the file is located (related to working directory is enough) defaults to "files")
+    """
     file_path = os.path.join(directory, filename)
     full_path = os.path.abspath(file_path)
 

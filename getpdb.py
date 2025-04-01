@@ -3,7 +3,7 @@ import requests
 import time
 
 
-def download_pdb(pdb_ids, directory="files", map="lac_PDB_files", retries=1, delay=2):
+def download_pdb(pdb_ids, map="lac_PDB_files",directory="files" , retries=1, delay=2):
     """Downloads PDB files while avoiding re-downloading existing files.
 
     Arguments:

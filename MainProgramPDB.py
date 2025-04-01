@@ -5,17 +5,17 @@ import SAP_From_List as sapl
 from rcsbapi.search import AttributeQuery, TextQuery
 import files_from_dir as ffd
 
-"""packages som behövs i importerna och denna kod: panda openpyxl requests rcsb-api"""
+"""packages needed for this code: panda openpyxl requests rcsb-api pyrosetta-distributed"""
 
-# skapa listor av column 2 i Excel document
+# Creates lists from column 2 in an Excel document
 listEco = excell.read_excel_column("files/ProteinlistaEco.xlsx")
 listSal = excell.read_excel_column("files/ProteinlistaSal.xlsx")
 listLac = excell.read_excel_column("files/ProteinlistaLac.xlsx")
 
-# API code
+# Search API code
 rId_list = []
-    # välj lista
-for val in listSal:
+    #Query configuration
+for val in listSal: # Choose list
     q1 = TextQuery(value= val)
     #q2 = TextQuery(value= "lactobacillus")
     #q3 = TextQuery(value= "")
@@ -26,29 +26,24 @@ for val in listSal:
     )
 
     query = q1 & q4
+    #Creates a list of all the search results and filters out duplicates.
     for rId in query():
         if rId not in rId_list:
             rId_list.append(rId)
 print(f" rId_list innehåller {len(rId_list)} stycken Id!")
 
+# Saves a CSV file of search results.
+csv.write_csv("Sal_output.csv", rId_list) # Choose file name, it's saved in /files in working directory by default, can be changed. Replaces files with the same name.
 
-# testlista
-TestList=["1CRN","4HHB","1DG1"]
+# Read a CSV file and create a list.
+pdb_list = csv.read_csv("Sal_output.csv") #Choose the file name of the file you want to read, defaults to /files/"selected file name" in working directory, can be changed.
 
-# sparar en fil, välj filnamn , (går att ändra directory med ett 3:e attribut) (ersätter eventuell fil med samma namn)
-csv.write_csv("Sal_output.csv", rId_list)
+# Download PDB files from a list, creates map if it does not exist, uses existing map if it exists.
+pdb.download_pdb(pdb_list, "SalPDBfiles", retries=0) #Give a list of PDB IDs to the constructor and choose the name of the map where the files should be downloaded to. Defaults to /files/"selected map" in working directory, can be changed.
 
-# läser in csv fil, välj rätt fil, (det går att ändra directory med ett andra attribut).
-pdb_list = csv.read_csv("Sal_output.csv")
+# Read a list of available PDB files in a map, defaults to /files/"chosen map" in working directory. (PDB ID list)
+pdb_list_from_dir= ffd.files_from_dir("SalPDBfiles") # Choose the map, directory of the map defaults to /files/"selected map" in working directory.
 
-# laddar ner pdb, välj var du ska skappa mappen samt mappens namn, i förhållande till denna python fil
-pdb.download_pdb(pdb_list, "SalPDBfiles", retries=1)
+#SAP the PDB files in a map.
+sapl.SAP_From_List(pdb_list_from_dir, "SalPDBfiles") #Give a list of the pdb files in the map and the name of the map, defaults to /files/"selected map" in working directory.
 
-#hämtar en lista av alla pdb filer i en mapp (utan .pdb)
-pdb_list_from_dir= ffd.files_from_dir("SalPDBfiles")
-
-#SAPPar pdber i listan
-sapl.SAP_From_List(pdb_list_from_dir, "SalPDBfiles")
-
-
-print("KLAR")
